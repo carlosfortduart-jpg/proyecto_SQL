@@ -9,30 +9,26 @@
 
 ## 1. Introducción
 
-Este proyecto tiene como objetivo el diseño, implementación y análisis de una base de datos relacional orientada al análisis, utilizando SQL. Para ello se ha trabajado con el dataset **Brazilian E-Commerce (Olist)**, disponible en la plataforma Kaggle, el cual contiene información real de pedidos realizados en un marketplace brasileño.
+Este proyecto tiene como objetivo el diseño, implementación y análisis de una base de datos relacional orientada al análisis, utilizando SQL. Para ello he trabajado con el dataset **Brazilian E-Commerce (Olist)**, disponible en la plataforma Kaggle  https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce , el cual contiene información real de pedidos realizados en un marketplace brasileño.
 
-El dataset proporciona datos detallados sobre clientes, pedidos, productos, vendedores, fechas y localización geográfica. A partir de esta información se ha construido un **modelo en estrella (Star Schema)**, separando una **tabla de hechos** y varias **tablas de dimensiones**, con el fin de facilitar el análisis exploratorio y la obtención de métricas relevantes para la toma de decisiones de negocio.
+El dataset proporciona datos detallados sobre clientes, pedidos, productos, vendedores, fechas y localización geográfica. A partir de esta información se ha construido un modelo en estrella (Star Schema), separando una tabla de hechos y varias tablas de dimensiones, con el fin de facilitar el análisis exploratorio y la obtención de métricas relevantes para la toma de decisiones de negocio.
 
 ### Información utilizada del dataset
 
-Para el desarrollo del proyecto se han utilizado principalmente los siguientes archivos:
+Para el desarrollo del proyecto se han utilizado principalmente los siguientes archivos, que hemos incluido en el repositorio:
 - `olist_customers_dataset`: información de clientes y su localización.
 - `olist_orders_dataset`: información de pedidos y fechas de compra.
 - `olist_order_items_dataset`: detalle de los productos vendidos en cada pedido.
-- `olist_products_dataset`: catálogo de productos y categorías.
-- `olist_sellers_dataset`: información de los vendedores.
 
 El alcance del proyecto se centra en el análisis de ventas, clientes, productos, geografía y evolución temporal. No se han incluido otros módulos del dataset (pagos, reviews o logística avanzada) para mantener un enfoque analítico claro y coherente con los objetivos del proyecto.
 
----
+## 2. Explicación del archivo `01-schema-def.sql`
 
-## 2. Explicación del archivo `01_schema.sql`
-
-El archivo `01_schema.sql` define completamente el **esquema de la base de datos**, incluyendo la creación de tablas, claves primarias, claves foráneas, restricciones, índices y vistas.
+Este archivo define completamente el **esquema de la base de datos**, incluyendo la creación de tablas, claves primarias, claves foráneas, restricciones, índices y vistas.
 
 ### Modelo de datos
 
-Se ha diseñado un **modelo en estrella**, compuesto por:
+Se ha diseñado un modelo en estrella, compuesto por:
 
 - **Tabla de hechos**
   - `fact_order_items`: representa cada producto vendido en un pedido. Contiene las métricas principales del negocio, como el precio del producto y el coste de envío.
@@ -54,11 +50,9 @@ Se ha diseñado un **modelo en estrella**, compuesto por:
 
 Este diseño permite realizar análisis complejos de forma eficiente y estructurada.
 
----
+## 3. Explicación del archivo `02-data-def.sql`
 
-## 3. Explicación del archivo `02_data.sql`
-
-El archivo `02_data.sql` se encarga de la **carga, transformación y limpieza de los datos**, partiendo de los archivos CSV originales importados previamente como tablas staging.
+Este archivo se encarga de la carga, transformación y limpieza de los datos, partiendo de los archivos CSV originales importados previamente.
 
 ### Proceso seguido
 
@@ -78,13 +72,9 @@ El archivo `02_data.sql` se encarga de la **carga, transformación y limpieza de
    - Uso de `UPDATE` para simular ajustes de negocio sobre los precios.
    - Uso de `DELETE` para eliminar registros inconsistentes.
 
-Este archivo refleja un flujo básico de **ETL (Extract, Transform, Load)** típico en proyectos de análisis de datos.
+## 4. Explicación del archivo `03-EDA-def.sql`
 
----
-
-## 4. Explicación del archivo `03_eda.sql`
-
-El archivo `03_eda.sql` constituye el **núcleo del proyecto**, donde se realiza el **Análisis Exploratorio de Datos (EDA)** utilizando SQL.
+Este archivo constituye el núcleo del proyecto, donde se realiza el **Análisis Exploratorio de Datos (EDA)** utilizando SQL.
 
 ### Contenido del análisis
 
@@ -100,9 +90,9 @@ El EDA se estructura en varios bloques temáticos:
   Ventas mensuales y anuales, crecimiento mes a mes y ranking de meses mediante funciones ventana.
 
 - **Análisis avanzado**  
-  Segmentación de clientes, detección de clientes sin compras (`LEFT JOIN`), uso de **CTEs encadenadas**, **funciones ventana** (`RANK`, `LAG`, `PARTITION BY`) y reutilización de la vista `vw_sales_summary`.
+  Segmentación de clientes, detección de clientes sin compras (`LEFT JOIN`), uso de CTEs encadenadas, funciones ventana (`RANK`, `LAG`, `PARTITION BY`) y reutilización de la vista `vw_sales_summary`.
 
-El archivo hace uso de las principales funcionalidades vistas en el curso:
+El archivo hace uso de las principales funcionalidades vistas en nuestro curso:
 - `JOINs` (INNER y LEFT)
 - `CASE`
 - Agregaciones (`SUM`, `AVG`, `COUNT`)
@@ -111,15 +101,13 @@ El archivo hace uso de las principales funcionalidades vistas en el curso:
 - Funciones ventana (`OVER`)
 - Vistas
 
-Todas las consultas están comentadas, explicando su finalidad técnica y su utilidad para el negocio.
-
----
+Todas las consultas las he comentado, explicando su finalidad técnica y su utilidad para el negocio.
 
 ## 5. Conclusiones
 
-Este proyecto demuestra la construcción de un modelo analítico completo a partir de datos reales de e-commerce. El uso de un **modelo en estrella** ha permitido separar claramente hechos y dimensiones, facilitando el análisis y la escalabilidad del sistema.
+Este proyecto, aunquea sea sencillo, demuestra la construcción de un modelo analítico completo a partir de datos reales de e-commerce. El uso de un modelo en estrella ha permitido separar claramente hechos y dimensiones, facilitando el análisis y la escalabilidad del sistema.
 
-El análisis exploratorio ha permitido:
+El análisis exploratorio nos ha permitido:
 - Identificar regiones con mayor volumen y facturación.
 - Detectar categorías de productos más rentables.
 - Analizar la evolución temporal de las ventas.
